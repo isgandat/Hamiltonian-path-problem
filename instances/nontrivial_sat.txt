@@ -1,5 +1,5 @@
-# Nontrivial satisfiable instance (20 vertices)
-# Intended as a larger, more complex Hamiltonian path instance.
+# Nontrivial satisfiable instance
+# 20 vertices, 24 edges
 20 24
 0 1
 1 2

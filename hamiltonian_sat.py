@@ -91,30 +91,32 @@ class HamiltonianPathEncoding:
     def build(self) -> Tuple[int, List[List[int]]]:
         n = self.n
 
-        # 1) Each position p is occupied by at least one vertex.
+                            #each position p is occupied by at least one vertex
         for p in range(n):
+
             clause = [self.var(v, p) for v in range(n)]
+
             self.add_clause(clause)
 
-        # 2) No position has two different vertices: at most one vertex per position.
+                            #no position has two different vertices: at most one vertex per position
         for p in range(n):
             for v1 in range(n):
                 for v2 in range(v1 + 1, n):
                     self.add_clause([-self.var(v1, p), -self.var(v2, p)])
 
-        # 3) Each vertex appears in at least one position.
+                            #each vertex appears in at least one position
         for v in range(n):
             clause = [self.var(v, p) for p in range(n)]
             self.add_clause(clause)
 
-        # 4) No vertex appears twice: at most one position per vertex.
+                            #no vertex appears twice: at most one position per vertex
         for v in range(n):
             for p1 in range(n):
                 for p2 in range(p1 + 1, n):
                     self.add_clause([-self.var(v, p1), -self.var(v, p2)])
 
-        # 5) Adjacency constraints:
-        # If (u, v) is not an edge, u and v cannot be consecutive in the path.
+
+                            #if (u, v) is not an edge, u and v cannot be consecutive in the path
         for u in range(n):
             for v in range(u + 1, n):
                 if (u, v) in self.edge_set:
@@ -145,7 +147,7 @@ def find_glucose(explicit_cmd: str = None) -> str:
     candidates = ["glucose", "glucose-syrup"]
     for cmd in candidates:
         try:
-            # Just check that the binary exists and is executable.
+            #just to check that the binary exists and is executable
             subprocess.run(
                 [cmd, "-h"],
                 stdout=subprocess.DEVNULL,
@@ -216,7 +218,7 @@ def decode_hamiltonian_path(n: int, model: Dict[int, bool]) -> List[int]:
             var = var_index(v, p)
             if model.get(var, False):
                 if p in vertices_by_pos:
-                    # In case of conflicting assignment, keep the first.
+                    #in case of conflicting assignment, keep the first
                     continue
                 vertices_by_pos[p] = v
 
@@ -237,6 +239,13 @@ def main(argv: List[str]) -> int:
         default=None,
         help="Path to input graph file (or '-' for stdin).",
     )
+    parser.add_argument(
+        "instance",
+        nargs="?",
+        default=None,
+        help="Input graph file (positional alternative to --input). Use '-' for stdin.",
+    )
+
     parser.add_argument(
         "--cnf-out",
         default=None,
@@ -265,8 +274,12 @@ def main(argv: List[str]) -> int:
 
     args = parser.parse_args(argv)
 
+    input_path = args.input if args.input is not None else args.instance
+    if input_path is None:
+        parser.error("Missing input instance. Provide a file path as a positional argument or with --input (or '-' for stdin).")
+
     try:
-        n, edges = read_graph(args.input)
+        n, edges = read_graph(input_path)
     except Exception as e:
         print(f"Error reading input graph: {e}", file=sys.stderr)
         return 1
@@ -283,9 +296,10 @@ def main(argv: List[str]) -> int:
             file=sys.stderr,
         )
 
-    # Decide CNF path
+    #Decide CNF path
     cnf_path: str
     tmp_file = None
+    
     if args.cnf_out:
         cnf_path = args.cnf_out
     else:
@@ -300,7 +314,7 @@ def main(argv: List[str]) -> int:
         print(f"Error writing CNF to '{cnf_path}': {e}", file=sys.stderr)
         return 1
 
-    # IMPORTANT FIX: use args.only_cnf (underscore), not args.only-cnf
+    #uses args.only_cnf (underscore), not args.only-cnf
     if args.only_cnf:
         if not args.quiet:
             print(f"CNF written to {cnf_path}.", file=sys.stderr)

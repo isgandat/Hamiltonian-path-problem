@@ -182,7 +182,10 @@ to see a short help. Main options:
 
 - `--input / -i PATH`  
   Path to the input graph file.  
-  If omitted or `-`, the script reads from stdin.
+  Use `-` to read the instance from stdin.
+
+- `INSTANCE` (positional)  
+  Path to the input graph file (same as `--input`).
 
 - `--cnf-out PATH`  
   Write the generated CNF in DIMACS format to `PATH`.
@@ -205,6 +208,8 @@ to see a short help. Main options:
 Solve the small satisfiable instance:
 
 ```bash
+python3 hamiltonian_sat.py instances/small_sat.txt
+# or:
 python3 hamiltonian_sat.py --input instances/small_sat.txt
 ```
 
@@ -229,7 +234,9 @@ python3 hamiltonian_sat.py     --input instances/nontrivial_sat.txt     --cnf-ou
 Solve the heaviest instance and see Glucose statistics:
 
 ```bash
-python3 hamiltonian_sat.py     --input instances/heavy_sat_50.txt     --show-stats
+python3 hamiltonian_sat.py instances/heavy_sat_50.txt --show-stats
+# or:
+python3 hamiltonian_sat.py --input instances/heavy_sat_50.txt --show-stats
 ```
 
 ---
@@ -413,6 +420,8 @@ The assignment states:
 I experimented with several satisfiable instances of increasing size (up to 50 vertices and 237,064 clauses in the CNF). On my machine, even the largest instance `heavy_sat_50.txt` was solved in **significantly less than 10 seconds** (about 0.434 s of real time).
 
 Despite increasing the graph size and CNF size, Glucose remained fast on these instances. Therefore, I did **not** obtain a satisfiable instance whose solving time is at least 10 seconds. Instead, I document the experiments and use `heavy_sat_50.txt` as a clearly nontrivial satisfiable instance that demonstrates how the encoding scales.
+
+This follows the “if you cannot find it, describe what you tried” branch of the requirement.
 
 ---
 
