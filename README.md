@@ -421,7 +421,6 @@ I experimented with several satisfiable instances of increasing size (up to 50 v
 
 Despite increasing the graph size and CNF size, Glucose remained fast on these instances. Therefore, I did **not** obtain a satisfiable instance whose solving time is at least 10 seconds. Instead, I document the experiments and use `heavy_sat_50.txt` as a clearly nontrivial satisfiable instance that demonstrates how the encoding scales.
 
-
 ---
 
 ## 6. Implementation notes
