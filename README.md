@@ -19,7 +19,6 @@ Given a finite undirected graph \( G = (V, E) \), a *Hamiltonian path* is a simp
 
 The script answers **YES** or **NO**, and for YES it prints one Hamiltonian path.
 
-This is a pure decision problem, so it fits the assignment requirement to consider yes/no problems.
 
 ---
 
@@ -29,7 +28,7 @@ The encoding uses the classical “vertex–position” model.
 
 ### Propositional variables
 
-Assume the graph has \( n \) vertices and we look for a path with positions \( 0, \dots, n-1 \).
+Let's assume that the graph has \( n \) vertices and we look for a path with positions \( 0, \dots, n-1 \).
 
 We introduce propositional variables
 
@@ -71,7 +70,7 @@ For each position \( p \) and for all distinct vertices \( v_1 \neq v_2 \):
 \neg x_{v_1,p} \lor \neg x_{v_2,p}.
 \]
 
-Together with (A), this enforces that each position is occupied by **exactly** one vertex.
+Together with (A), this enforces that each position is occupied by exactly one vertex.
 
 #### (C) Every vertex appears somewhere in the path
 
@@ -89,7 +88,7 @@ For each vertex \( v \) and for all distinct positions \( p_1 \neq p_2 \):
 \neg x_{v,p_1} \lor \neg x_{v,p_2}.
 \]
 
-Together with (C), this means that every vertex appears in **exactly** one position.
+Together with (C), this means that every vertex appears in exactly one position.
 
 #### (E) Adjacency constraints
 
