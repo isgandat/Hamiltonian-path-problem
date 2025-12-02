@@ -2,21 +2,21 @@
 
 This project solves the **Hamiltonian Path** problem for undirected graphs by encoding it into SAT (DIMACS CNF) and running **Glucose 4.2** (or 4.2.x).
 
-A *Hamiltonian path* in a graph \(G=(V,E)\) is a simple path that visits every vertex exactly once. In this project the input vertices are labeled `0..n-1`, and a solution is printed as an ordering of all vertices.
+A *Hamiltonian path* in a graph $G = (V, E)$ is a simple path that visits every vertex exactly once. In this project the input vertices are labeled `0..n-1`, and a solution is printed as an ordering of all vertices.
 
 ---
 
 ## 1. Problem definition (parameters and constraints)
 
-**Input:** an undirected graph \(G=(V,E)\)
+**Input:** an undirected graph $G = (V, E)$
 
-- \(V = \{0,1,\dots,n-1\}\)
-- \(E\) is a set of undirected edges \(\{u,v\}\) with \(u\neq v\)
+- $V = \{0,1,\dots,n-1\}$
+- $E$ is a set of undirected edges $\{u,v\}$ with $u \neq v$
 
-**Question:** does there exist an ordering \(v_0, v_1, \dots, v_{n-1}\) such that:
+**Question:** does there exist an ordering $v_0, v_1, \dots, v_{n-1}$ such that:
 
 - every vertex appears exactly once, and
-- for every \(i\in\{0,\dots,n-2\}\), \(\{v_i, v_{i+1}\}\in E\)
+- for every $i \in \{0,\dots,n-2\}$, $\{v_i, v_{i+1}\} \in E$
 
 If the answer is YES, the script prints one such ordering.
 
@@ -30,7 +30,7 @@ Let the path positions be `0..n-1`. The encoding uses variables of the form:
 
 ### DIMACS variable mapping
 
-The implementation maps \(x(v,p)\) to a DIMACS variable id:
+The implementation maps $x(v,p)$ to a DIMACS variable id:
 
 - `var(v,p) = v*n + p + 1`  (so ids are `1..n^2`)
 
